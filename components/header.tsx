@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 
 export async function Header() {
   return (
-    <header className="sticky top-0 z-50 flex h-14 w-full shrink-0 items-center justify-between border-b bg-background px-4 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 flex h-14 w-full shrink-0 items-center justify-between border-b bg-background/60 px-4 backdrop-blur-xl">
       <span className="home-links inline-flex items-center whitespace-nowrap">
         <a href="https://vercel.com" rel="noopener" target="_blank">
           <IconVercel className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -32,16 +32,6 @@ export async function Header() {
           >
             <IconGitHub />
             <span className="ml-2 hidden md:flex">GitHub</span>
-          </a>
-        </Button>
-        <Button asChild>
-          <a
-            href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fai%2Fblob%2Fmain%2Fexamples%2Fnext-ai-rsc&env=OPENAI_API_KEY&envDescription=OpenAI+API+Key&envLink=https%3A%2F%2Fplatform.openai.com%2Fapi-keys"
-            target="_blank"
-          >
-            <IconVercel className="mr-2" />
-            <span className="hidden sm:block">Deploy to Vercel</span>
-            <span className="sm:hidden">Deploy</span>
           </a>
         </Button>
       </div>
