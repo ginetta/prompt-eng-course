@@ -1,13 +1,14 @@
-import {
-  TAnyToolDefinitionArray,
-  TToolDefinitionMap,
-} from '@/lib/utils/tool-definition';
 import { OpenAIStream } from 'ai';
 import type OpenAI from 'openai';
 import zodToJsonSchema from 'zod-to-json-schema';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { z } from 'zod';
+
+import {
+  TAnyToolDefinitionArray,
+  TToolDefinitionMap,
+} from '@/lib/utils/tool-definition';
 
 const consumeStream = async (stream: ReadableStream) => {
   const reader = stream.getReader();
@@ -50,7 +51,7 @@ export function runOpenAICompletion<
         (await openai.chat.completions.create({
           ...rest,
           stream: true,
-          functions: functions.map(fn => ({
+          functions: functions.map((fn) => ({
             name: fn.name,
             description: fn.description,
             parameters: zodToJsonSchema(fn.parameters) as Record<
@@ -138,7 +139,7 @@ export const runAsyncFnWithoutBlocking = (
 };
 
 export const sleep = (ms: number) =>
-  new Promise(resolve => setTimeout(resolve, ms));
+  new Promise((resolve) => setTimeout(resolve, ms));
 
 // Fake data
 export function getStockPrice(name: string) {

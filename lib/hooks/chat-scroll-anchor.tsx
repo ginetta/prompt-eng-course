@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { useInView } from 'react-intersection-observer';
+
 import { useAtBottom } from './use-at-bottom';
 
 interface ChatScrollAnchorProps {

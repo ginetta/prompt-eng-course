@@ -8,6 +8,7 @@ import {
   createStreamableUI,
   createStreamableValue,
 } from 'ai/rsc';
+
 import { itinerarySchema } from './itinerary';
 import { ItineraryView } from './itinerary-view';
 
@@ -36,7 +37,7 @@ export async function submitItineraryRequest({
       `Please suggest the best tourist activities for me to do.`,
   })
     // non-blocking: the generateItinerary call returns immediately
-    .then(async result => {
+    .then(async (result) => {
       try {
         for await (const partialItinerary of result.partialObjectStream) {
           itineraryComponent.update(

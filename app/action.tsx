@@ -2,6 +2,7 @@ import 'server-only';
 
 import { createAI, createStreamableUI, getMutableAIState } from 'ai/rsc';
 import OpenAI from 'openai';
+import { z } from 'zod';
 
 import {
   spinner,
@@ -13,14 +14,12 @@ import {
   Stocks,
   Events,
 } from '@/components/llm-stocks';
-
 import {
   runAsyncFnWithoutBlocking,
   sleep,
   formatNumber,
   runOpenAICompletion,
 } from '@/lib/utils';
-import { z } from 'zod';
 import { StockSkeleton } from '@/components/llm-stocks/stock-skeleton';
 import { EventsSkeleton } from '@/components/llm-stocks/events-skeleton';
 import { StocksSkeleton } from '@/components/llm-stocks/stocks-skeleton';
