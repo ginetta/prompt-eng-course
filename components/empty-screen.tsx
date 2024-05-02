@@ -23,7 +23,7 @@ export function EmptyScreen({
   submitMessage: (message: string) => void;
 }) {
   return (
-    <div className="mx-auto max-w-2xl px-4">
+    <div className="mx-4 h-full px-4">
       <div className="mb-4 rounded-lg border bg-background p-8">
         <h1 className="mb-2 text-lg font-semibold">
           Welcome to AI SDK 3.0 Generative UI demo!
