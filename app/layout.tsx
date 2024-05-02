@@ -1,48 +1,46 @@
-import type { Metadata } from 'next';
-import { GeistMono } from 'geist/font/mono';
-import { GeistSans } from 'geist/font/sans';
-import { Analytics } from '@vercel/analytics/react';
+import type { Metadata } from "next";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
+import { Analytics } from "@vercel/analytics/react";
+import { Toaster } from "@/components/ui/toaster";
+import "./globals.css";
 
-import './globals.css';
-
-import { AI } from './action';
-
-import { Toaster } from '@/components/ui/toaster';
-import { Header } from '@/components/header';
-import { Providers } from '@/components/providers';
+import { AI } from "./action";
+import { Header } from "@/components/header";
+import { Providers } from "@/components/providers";
 
 const meta = {
-  title: 'AI RSC Demo',
+  title: "AI RSC Demo",
   description:
-    'Demo of an interactive financial assistant built using Next.js and Vercel AI SDK.',
+    "Demo of an interactive financial assistant built using Next.js and Vercel AI SDK.",
 };
 export const metadata: Metadata = {
   ...meta,
   title: {
-    default: 'AI RSC Demo',
+    default: "AI RSC Demo",
     template: `%s - AI RSC Demo`,
   },
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
   },
   twitter: {
     ...meta,
-    card: 'summary_large_image',
-    site: '@vercel',
+    card: "summary_large_image",
+    site: "@vercel",
   },
   openGraph: {
     ...meta,
-    locale: 'en-US',
-    type: 'website',
+    locale: "en-US",
+    type: "website",
   },
 };
 
 export const viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
 };
 
@@ -64,11 +62,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex min-h-screen flex-col">
+            <div className="flex flex-col h-screen justify-between">
               <Header />
-              <main className="flex flex-1 flex-col bg-muted/50 dark:bg-background">
-                {children}
-              </main>
+              <main className="flex flex-1 w-full space-x-8">{children}</main>
             </div>
           </Providers>
         </AI>
@@ -78,4 +74,4 @@ export default function RootLayout({
   );
 }
 
-export const runtime = 'edge';
+export const runtime = "edge";
