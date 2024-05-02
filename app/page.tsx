@@ -1,39 +1,39 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
+import { useUIState, useActions } from 'ai/rsc';
+import Textarea from 'react-textarea-autosize';
 
-import { useUIState, useActions } from "ai/rsc";
-import { UserMessage } from "@/components/llm-stocks/message";
+import { type AI } from './action';
 
-import { type AI } from "./action";
-import { ChatScrollAnchor } from "@/lib/hooks/chat-scroll-anchor";
-import { FooterText } from "@/components/footer";
-import Textarea from "react-textarea-autosize";
-import { useEnterSubmit } from "@/lib/hooks/use-enter-submit";
+import { UserMessage } from '@/components/llm-stocks/message';
+import { ChatScrollAnchor } from '@/lib/hooks/chat-scroll-anchor';
+import { FooterText } from '@/components/footer';
+import { useEnterSubmit } from '@/lib/hooks/use-enter-submit';
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { IconArrowElbow, IconPlus } from "@/components/ui/icons";
-import { Button } from "@/components/ui/button";
-import { ChatList } from "@/components/chat-list";
-import { EmptyScreen } from "@/components/empty-screen";
-import { Sidebar } from "@/components/sidebar";
+} from '@/components/ui/tooltip';
+import { IconArrowElbow, IconPlus } from '@/components/ui/icons';
+import { Button } from '@/components/ui/button';
+import { ChatList } from '@/components/chat-list';
+import { EmptyScreen } from '@/components/empty-screen';
+import { Sidebar } from '@/components/sidebar';
 
 export default function Page() {
   const [messages, setMessages] = useUIState<typeof AI>();
   const { submitUserMessage } = useActions<typeof AI>();
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "/") {
+      if (e.key === '/') {
         if (
           e.target &&
-          ["INPUT", "TEXTAREA"].includes((e.target as any).nodeName)
+          ['INPUT', 'TEXTAREA'].includes((e.target as any).nodeName)
         ) {
           return;
         }
@@ -45,17 +45,17 @@ export default function Page() {
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, [inputRef]);
 
   return (
     <>
-      <Sidebar className="flex flex-col p-8 h-full" />
-      <section className="pt-4 md:pt-10 flex flex-col content-between">
+      <Sidebar className="flex h-full flex-col p-8" />
+      <section className="flex flex-col content-between pt-4 md:pt-10">
         {messages.length ? (
           <>
             <ChatList messages={messages} />
@@ -82,9 +82,9 @@ export default function Page() {
           />
         )}
         <ChatScrollAnchor trackVisibility={true} />
-        <div className=" w-full bg-gradient-to-b from-muted/30 from-0% to-muted/30 to-50% duration-300 ease-in-out animate-in dark:from-background/10 dark:from-10% dark:to-background/80 peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]">
+        <div className=" w-full bg-gradient-to-b from-muted/30 from-0% to-muted/30 to-50% duration-300 ease-in-out animate-in peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px] dark:from-background/10 dark:from-10% dark:to-background/80">
           <div className="mx-4  sm:px-4">
-            <div className="px-4 py-2 space-y-4 border-t shadow-lg bg-background sm:rounded-t-xl sm:border md:py-4">
+            <div className="space-y-4 border-t bg-background px-4 py-2 shadow-lg sm:rounded-t-xl sm:border md:py-4">
               <form
                 ref={formRef}
                 onSubmit={async (e: any) => {
@@ -92,11 +92,11 @@ export default function Page() {
 
                   // Blur focus on mobile
                   if (window.innerWidth < 600) {
-                    e.target["message"]?.blur();
+                    e.target['message']?.blur();
                   }
 
                   const value = inputValue.trim();
-                  setInputValue("");
+                  setInputValue('');
                   if (!value) return;
 
                   // Add user message UI
@@ -121,13 +121,13 @@ export default function Page() {
                   }
                 }}
               >
-                <div className="relative flex flex-col w-full px-8 overflow-hidden max-h-60 grow bg-background sm:rounded-md sm:border sm:px-12">
+                <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
                         variant="outline"
                         size="icon"
-                        className="absolute left-0 w-8 h-8 p-0 rounded-full top-4 bg-background sm:left-4"
+                        className="absolute left-0 top-4 h-8 w-8 rounded-full bg-background p-0 sm:left-4"
                         onClick={(e) => {
                           e.preventDefault();
                           window.location.reload();
@@ -160,7 +160,7 @@ export default function Page() {
                         <Button
                           type="submit"
                           size="icon"
-                          disabled={inputValue === ""}
+                          disabled={inputValue === ''}
                         >
                           <IconArrowElbow />
                           <span className="sr-only">Send message</span>

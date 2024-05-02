@@ -1,6 +1,7 @@
-import { FC, useState } from "react";
-import { Slider } from "./slider";
-import { SliderProps } from "@radix-ui/react-slider";
+import { FC, useState } from 'react';
+import { SliderProps } from '@radix-ui/react-slider';
+
+import { Slider } from './slider';
 
 type SliderWithLabelProps = {
   label: string;
@@ -13,8 +14,8 @@ export const SliderWithLabel: FC<SliderWithLabelProps> = ({
   const [value, setValue] = useState(50);
 
   return (
-    <div className="w-[300px] flex flex-col items-start justify-center h-full bg-muted/50 dark:bg-background space-y-4">
-      <div className="flex justify-between w-full">
+    <div className="flex h-full w-[300px] flex-col items-start justify-center space-y-4 bg-muted/50 dark:bg-background">
+      <div className="flex w-full justify-between">
         <h3 className="text-lg text-gray-400">{label}</h3>
         <h4>{value}</h4>
       </div>
