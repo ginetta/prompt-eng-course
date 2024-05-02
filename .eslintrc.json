@@ -3,6 +3,7 @@
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error",
+    "no-unused-vars": "off",
     "import/order": ["error", { "newlines-between": "always" }],
     "no-console": ["error", { "allow": ["info", "warn", "error"] }],
     "spaced-comment": ["error", "always", { "markers": ["/"] }]

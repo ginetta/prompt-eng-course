@@ -39,7 +39,7 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
       <p className="mb-2">
         Purchasing {amount} ${symbol}...
       </p>
-    </div>,
+    </div>
   );
 
   const systemMessage = createStreamableUI(null);
@@ -54,7 +54,7 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
         <p className="mb-2">
           Purchasing {amount} ${symbol}... working on it...
         </p>
-      </div>,
+      </div>
     );
 
     await sleep(1000);
@@ -65,14 +65,14 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
           You have successfully purchased {amount} ${symbol}. Total cost:{' '}
           {formatNumber(amount * price)}
         </p>
-      </div>,
+      </div>
     );
 
     systemMessage.done(
       <SystemMessage>
         You have purchased {amount} shares of {symbol} at ${price}. Total cost ={' '}
         {formatNumber(amount * price)}.
-      </SystemMessage>,
+      </SystemMessage>
     );
 
     aiState.done([
@@ -108,7 +108,7 @@ async function submitUserMessage(content: string) {
   ]);
 
   const reply = createStreamableUI(
-    <BotMessage className="items-center">{spinner}</BotMessage>,
+    <BotMessage className="items-center">{spinner}</BotMessage>
   );
 
   const completion = runOpenAICompletion(openai, {
@@ -148,7 +148,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
           symbol: z
             .string()
             .describe(
-              'The name or symbol of the stock or currency. e.g. DOGE/AAPL/USD.',
+              'The name or symbol of the stock or currency. e.g. DOGE/AAPL/USD.'
             ),
           price: z.number().describe('The price of the stock.'),
           delta: z.number().describe('The change in price of the stock'),
@@ -162,13 +162,13 @@ Besides that, you can also chat with users and do some calculations if needed.`,
           symbol: z
             .string()
             .describe(
-              'The name or symbol of the stock or currency. e.g. DOGE/AAPL/USD.',
+              'The name or symbol of the stock or currency. e.g. DOGE/AAPL/USD.'
             ),
           price: z.number().describe('The price of the stock.'),
           numberOfShares: z
             .number()
             .describe(
-              'The **number of shares** for a stock or currency to purchase. Can be optional if the user did not specify it.',
+              'The **number of shares** for a stock or currency to purchase. Can be optional if the user did not specify it.'
             ),
         }),
       },
@@ -181,7 +181,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
               symbol: z.string().describe('The symbol of the stock'),
               price: z.number().describe('The price of the stock'),
               delta: z.number().describe('The change in price of the stock'),
-            }),
+            })
           ),
         }),
       },
@@ -197,7 +197,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
                 .describe('The date of the event, in ISO-8601 format'),
               headline: z.string().describe('The headline of the event'),
               description: z.string().describe('The description of the event'),
-            }),
+            })
           ),
         }),
       },
@@ -217,7 +217,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
     reply.update(
       <BotCard>
         <StocksSkeleton />
-      </BotCard>,
+      </BotCard>
     );
 
     await sleep(1000);
@@ -225,7 +225,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
     reply.done(
       <BotCard>
         <Stocks stocks={stocks} />
-      </BotCard>,
+      </BotCard>
     );
 
     aiState.done([
@@ -242,7 +242,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
     reply.update(
       <BotCard>
         <EventsSkeleton />
-      </BotCard>,
+      </BotCard>
     );
 
     await sleep(1000);
@@ -250,7 +250,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
     reply.done(
       <BotCard>
         <Events events={events} />
-      </BotCard>,
+      </BotCard>
     );
 
     aiState.done([
@@ -269,7 +269,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
       reply.update(
         <BotCard>
           <StockSkeleton />
-        </BotCard>,
+        </BotCard>
       );
 
       await sleep(1000);
@@ -277,7 +277,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
       reply.done(
         <BotCard>
           <Stock name={symbol} price={price} delta={delta} />
-        </BotCard>,
+        </BotCard>
       );
 
       aiState.done([
@@ -288,7 +288,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
           content: `[Price of ${symbol} = ${price}]`,
         },
       ]);
-    },
+    }
   );
 
   completion.onFunctionCall(
@@ -322,7 +322,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
               price={+price}
             />
           </BotCard>
-        </>,
+        </>
       );
       aiState.done([
         ...aiState.get(),
@@ -334,7 +334,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
           }]`,
         },
       ]);
-    },
+    }
   );
 
   return {

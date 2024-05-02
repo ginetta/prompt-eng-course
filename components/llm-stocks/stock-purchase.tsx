@@ -18,7 +18,7 @@ export function Purchase({
 }) {
   const [value, setValue] = useState(defaultAmount || 100);
   const [purchasingUI, setPurchasingUI] = useState<null | React.ReactNode>(
-    null,
+    null
   );
   const [history, setHistory] = useAIState<typeof AI>();
   const [, setMessages] = useUIState<typeof AI>();

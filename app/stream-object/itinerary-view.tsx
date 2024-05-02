@@ -32,10 +32,10 @@ export const ItineraryView = ({
                             <p className="text-sm text-gray-400">{`Duration: ${activity.duration} hours`}</p>
                           )}
                         </div>
-                      ),
+                      )
                   )}
                 </div>
-              ),
+              )
           )}
         </div>
       </>

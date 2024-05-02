@@ -29,11 +29,11 @@ export function Stock({ name = 'DOGE', price = 12.34, delta = 1 }) {
 
   const xToDate = scaleLinear(
     [0, width],
-    [subMonths(new Date(), 6), new Date()],
+    [subMonths(new Date(), 6), new Date()]
   );
   const xToValue = scaleLinear(
     [0, width],
-    [price - price / 2, price + price / 2],
+    [price - price / 2, price + price / 2]
   );
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export function Stock({ name = 'DOGE', price = 12.34, delta = 1 }) {
         role: 'system' as const,
         content: `[User has highlighted dates between between ${format(
           xToDate(startHighlight),
-          'd LLL',
+          'd LLL'
         )} and ${format(xToDate(endHighlight), 'd LLL, yyyy')}`,
       };
 

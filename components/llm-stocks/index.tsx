@@ -23,7 +23,7 @@ const Purchase = dynamic(
         Loading stock info...
       </div>
     ),
-  },
+  }
 );
 
 const Stocks = dynamic(() => import('./stocks').then((mod) => mod.Stocks), {

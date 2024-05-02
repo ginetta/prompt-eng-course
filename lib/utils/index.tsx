@@ -28,7 +28,7 @@ export function runOpenAICompletion<
   openai: OpenAI,
   params: T & {
     functions: TFunctions;
-  },
+  }
 ) {
   let text = '';
   let hasFunction = false;
@@ -72,12 +72,12 @@ export function runOpenAICompletion<
             // this is necessary if someone uses a .default in their schema
             const zodSchema = functionsMap[functionCallPayload.name].parameters;
             const parsedArgs = zodSchema.safeParse(
-              functionCallPayload.arguments,
+              functionCallPayload.arguments
             );
 
             if (!parsedArgs.success) {
               throw new Error(
-                `Invalid function call in message. Expected a function call object`,
+                `Invalid function call in message. Expected a function call object`
               );
             }
 
@@ -92,14 +92,14 @@ export function runOpenAICompletion<
             if (hasFunction) return;
             onTextContent(text, true);
           },
-        },
-      ),
+        }
+      )
     );
   })();
 
   return {
     onTextContent: (
-      callback: (text: string, isFinal: boolean) => void | Promise<void>,
+      callback: (text: string, isFinal: boolean) => void | Promise<void>
     ) => {
       onTextContent = callback;
     },
@@ -114,8 +114,8 @@ export function runOpenAICompletion<
                 : never
               : never
             : never
-        >,
-      ) => void | Promise<void>,
+        >
+      ) => void | Promise<void>
     ) => {
       onFunctionCall[name] = callback;
     },
@@ -133,7 +133,7 @@ export const formatNumber = (value: number) =>
   }).format(value);
 
 export const runAsyncFnWithoutBlocking = (
-  fn: (...args: any) => Promise<any>,
+  fn: (...args: any) => Promise<any>
 ) => {
   fn();
 };

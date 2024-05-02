@@ -49,7 +49,7 @@ export function BotCard({
       <div
         className={cn(
           'flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm',
-          !showAvatar && 'invisible',
+          !showAvatar && 'invisible'
         )}
       >
         <IconAI />

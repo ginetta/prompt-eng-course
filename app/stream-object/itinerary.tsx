@@ -10,9 +10,9 @@ export const itinerarySchema = z.object({
           name: z.string(),
           description: z.string(),
           duration: z.number(),
-        }),
+        })
       ),
-    }),
+    })
   ),
 });
 

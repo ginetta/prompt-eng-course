@@ -41,7 +41,7 @@ export async function submitItineraryRequest({
       try {
         for await (const partialItinerary of result.partialObjectStream) {
           itineraryComponent.update(
-            <ItineraryView itinerary={partialItinerary} />,
+            <ItineraryView itinerary={partialItinerary} />
           );
         }
       } finally {
