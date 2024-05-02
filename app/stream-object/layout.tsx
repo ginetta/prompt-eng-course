@@ -1,6 +1,7 @@
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
 import type { Metadata } from 'next';
+
 import { GenerateItineraryAI } from './generate-itinerary';
 import '../globals.css';
 

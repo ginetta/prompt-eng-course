@@ -1,13 +1,14 @@
-import {
-  TAnyToolDefinitionArray,
-  TToolDefinitionMap,
-} from '@/lib/utils/tool-definition';
 import { OpenAIStream } from 'ai';
 import type OpenAI from 'openai';
 import zodToJsonSchema from 'zod-to-json-schema';
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { z } from 'zod';
+
+import {
+  TAnyToolDefinitionArray,
+  TToolDefinitionMap,
+} from '@/lib/utils/tool-definition';
 
 const consumeStream = async (stream: ReadableStream) => {
   const reader = stream.getReader();
@@ -27,7 +28,7 @@ export function runOpenAICompletion<
   openai: OpenAI,
   params: T & {
     functions: TFunctions;
-  },
+  }
 ) {
   let text = '';
   let hasFunction = false;
@@ -50,7 +51,7 @@ export function runOpenAICompletion<
         (await openai.chat.completions.create({
           ...rest,
           stream: true,
-          functions: functions.map(fn => ({
+          functions: functions.map((fn) => ({
             name: fn.name,
             description: fn.description,
             parameters: zodToJsonSchema(fn.parameters) as Record<
@@ -71,12 +72,12 @@ export function runOpenAICompletion<
             // this is necessary if someone uses a .default in their schema
             const zodSchema = functionsMap[functionCallPayload.name].parameters;
             const parsedArgs = zodSchema.safeParse(
-              functionCallPayload.arguments,
+              functionCallPayload.arguments
             );
 
             if (!parsedArgs.success) {
               throw new Error(
-                `Invalid function call in message. Expected a function call object`,
+                `Invalid function call in message. Expected a function call object`
               );
             }
 
@@ -91,14 +92,14 @@ export function runOpenAICompletion<
             if (hasFunction) return;
             onTextContent(text, true);
           },
-        },
-      ),
+        }
+      )
     );
   })();
 
   return {
     onTextContent: (
-      callback: (text: string, isFinal: boolean) => void | Promise<void>,
+      callback: (text: string, isFinal: boolean) => void | Promise<void>
     ) => {
       onTextContent = callback;
     },
@@ -113,8 +114,8 @@ export function runOpenAICompletion<
                 : never
               : never
             : never
-        >,
-      ) => void | Promise<void>,
+        >
+      ) => void | Promise<void>
     ) => {
       onFunctionCall[name] = callback;
     },
@@ -132,13 +133,13 @@ export const formatNumber = (value: number) =>
   }).format(value);
 
 export const runAsyncFnWithoutBlocking = (
-  fn: (...args: any) => Promise<any>,
+  fn: (...args: any) => Promise<any>
 ) => {
   fn();
 };
 
 export const sleep = (ms: number) =>
-  new Promise(resolve => setTimeout(resolve, ms));
+  new Promise((resolve) => setTimeout(resolve, ms));
 
 // Fake data
 export function getStockPrice(name: string) {

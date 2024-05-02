@@ -24,7 +24,7 @@ export function EmptyScreen({
 }) {
   return (
     <div className="mx-auto max-w-2xl px-4">
-      <div className="rounded-lg border bg-background p-8 mb-4">
+      <div className="mb-4 rounded-lg border bg-background p-8">
         <h1 className="mb-2 text-lg font-semibold">
           Welcome to AI SDK 3.0 Generative UI demo!
         </h1>
@@ -50,7 +50,7 @@ export function EmptyScreen({
           as they happen.
         </p>
         <p className="leading-normal text-muted-foreground">Try an example:</p>
-        <div className="mt-4 flex flex-col items-start space-y-2 mb-4">
+        <div className="mb-4 mt-4 flex flex-col items-start space-y-2">
           {exampleMessages.map((message, index) => (
             <Button
               key={index}
@@ -66,7 +66,7 @@ export function EmptyScreen({
           ))}
         </div>
       </div>
-      <p className="leading-normal text-muted-foreground text-[0.8rem] text-center max-w-96 ml-auto mr-auto">
+      <p className="ml-auto mr-auto max-w-96 text-center text-[0.8rem] leading-normal text-muted-foreground">
         Note: Data and latency are simulated for illustrative purposes and
         should not be considered as financial advice.
       </p>

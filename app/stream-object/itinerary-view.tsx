@@ -13,7 +13,7 @@ export const ItineraryView = ({
           {itinerary.days.map(
             (day, index) =>
               day && (
-                <div key={index} className="p-4 border rounded-lg">
+                <div key={index} className="rounded-lg border p-4">
                   <h3 className="font-bold">{day.theme ?? ''}</h3>
 
                   {day.activities?.map(
@@ -32,10 +32,10 @@ export const ItineraryView = ({
                             <p className="text-sm text-gray-400">{`Duration: ${activity.duration} hours`}</p>
                           )}
                         </div>
-                      ),
+                      )
                   )}
                 </div>
-              ),
+              )
           )}
         </div>
       </>

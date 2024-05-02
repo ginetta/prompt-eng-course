@@ -2,10 +2,12 @@ import type { Metadata } from 'next';
 import { GeistMono } from 'geist/font/mono';
 import { GeistSans } from 'geist/font/sans';
 import { Analytics } from '@vercel/analytics/react';
-import { Toaster } from '@/components/ui/toaster';
+
 import './globals.css';
 
 import { AI } from './action';
+
+import { Toaster } from '@/components/ui/toaster';
 import { Header } from '@/components/header';
 import { Providers } from '@/components/providers';
 
@@ -62,9 +64,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex flex-col min-h-screen">
+            <div className="flex min-h-screen flex-col">
               <Header />
-              <main className="flex flex-col flex-1 bg-muted/50 dark:bg-background">
+              <main className="flex flex-1 flex-col bg-muted/50 dark:bg-background">
                 {children}
               </main>
             </div>

@@ -1,14 +1,16 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { readStreamableValue, useUIState } from 'ai/rsc';
 import { useState } from 'react';
+
 import {
   GenerateItineraryAI,
   submitItineraryRequest,
 } from './generate-itinerary';
+
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export default function ItineraryPage() {
   const [destination, setDestination] = useState('');
@@ -17,14 +19,14 @@ export default function ItineraryPage() {
   const [result, setResult] = useUIState<typeof GenerateItineraryAI>();
 
   return (
-    <div className="w-full max-w-2xl p-4 mx-auto md:p-6 lg:p-8">
-      <h1 className="mb-6 text-2xl font-bold text-center">
+    <div className="mx-auto w-full max-w-2xl p-4 md:p-6 lg:p-8">
+      <h1 className="mb-6 text-center text-2xl font-bold">
         City Travel Itinerary Planner
       </h1>
 
       <form
         className="space-y-4"
-        onSubmit={async e => {
+        onSubmit={async (e) => {
           e.preventDefault();
 
           const result = await submitItineraryRequest({
@@ -50,7 +52,7 @@ export default function ItineraryPage() {
             required
             value={destination}
             disabled={isGenerating}
-            onChange={e => setDestination(e.target.value)}
+            onChange={(e) => setDestination(e.target.value)}
           />
         </div>
         <div className="space-y-2">
@@ -64,7 +66,7 @@ export default function ItineraryPage() {
             max="7" // Maximum length of stay
             value={lengthOfStay}
             disabled={isGenerating}
-            onChange={e => setLengthOfStay(e.target.value)}
+            onChange={(e) => setLengthOfStay(e.target.value)}
           />
         </div>
         <Button className="w-full" type="submit" disabled={isGenerating}>

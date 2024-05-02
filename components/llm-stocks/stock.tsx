@@ -29,11 +29,11 @@ export function Stock({ name = 'DOGE', price = 12.34, delta = 1 }) {
 
   const xToDate = scaleLinear(
     [0, width],
-    [subMonths(new Date(), 6), new Date()],
+    [subMonths(new Date(), 6), new Date()]
   );
   const xToValue = scaleLinear(
     [0, width],
-    [price - price / 2, price + price / 2],
+    [price - price / 2, price + price / 2]
   );
 
   useEffect(() => {
@@ -43,34 +43,34 @@ export function Stock({ name = 'DOGE', price = 12.34, delta = 1 }) {
         role: 'system' as const,
         content: `[User has highlighted dates between between ${format(
           xToDate(startHighlight),
-          'd LLL',
+          'd LLL'
         )} and ${format(xToDate(endHighlight), 'd LLL, yyyy')}`,
       };
 
       if (history[history.length - 1]?.id === id) {
-        setHistory(prevHistory => [...prevHistory.slice(0, -1), message]);
+        setHistory((prevHistory) => [...prevHistory.slice(0, -1), message]);
       } else {
-        setHistory(prevHistory => [...prevHistory, message]);
+        setHistory((prevHistory) => [...prevHistory, message]);
       }
     }
   }, [startHighlight, endHighlight]);
 
   return (
-    <div className="p-4 text-green-400 border rounded-xl bg-zinc-950">
-      <div className="inline-block float-right px-2 py-1 text-xs rounded-full bg-white/10">
+    <div className="rounded-xl border bg-zinc-950 p-4 text-green-400">
+      <div className="float-right inline-block rounded-full bg-white/10 px-2 py-1 text-xs">
         {`${delta > 0 ? '+' : ''}${((delta / price) * 100).toFixed(2)}% ${
           delta > 0 ? '↑' : '↓'
         }`}
       </div>
       <div className="text-lg text-zinc-300">{name}</div>
       <div className="text-3xl font-bold">${price}</div>
-      <div className="mt-1 text-xs text text-zinc-500">
+      <div className="text mt-1 text-xs text-zinc-500">
         Closed: Feb 27, 4:59 PM EST
       </div>
 
       <div
         className="relative -mx-4 cursor-col-resize"
-        onPointerDown={event => {
+        onPointerDown={(event) => {
           if (chartRef.current) {
             const { clientX } = event;
             const { left } = chartRef.current.getBoundingClientRect();
@@ -85,7 +85,7 @@ export function Stock({ name = 'DOGE', price = 12.34, delta = 1 }) {
             });
           }
         }}
-        onPointerUp={event => {
+        onPointerUp={(event) => {
           if (chartRef.current) {
             const { clientX } = event;
             const { left } = chartRef.current.getBoundingClientRect();
@@ -93,7 +93,7 @@ export function Stock({ name = 'DOGE', price = 12.34, delta = 1 }) {
             setEndHighlight(clientX - left);
           }
         }}
-        onPointerMove={event => {
+        onPointerMove={(event) => {
           if (chartRef.current) {
             const { clientX } = event;
             const { left } = chartRef.current.getBoundingClientRect();
@@ -116,14 +116,14 @@ export function Stock({ name = 'DOGE', price = 12.34, delta = 1 }) {
       >
         {priceAtTime.x > 0 ? (
           <div
-            className="absolute z-10 flex gap-2 p-2 rounded-md pointer-events-none select-none bg-zinc-800 w-fit"
+            className="pointer-events-none absolute z-10 flex w-fit select-none gap-2 rounded-md bg-zinc-800 p-2"
             style={{
               left: priceAtTime.x - 124 / 2,
               top: 30,
             }}
           >
             <div className="text-xs tabular-nums">${priceAtTime.value}</div>
-            <div className="text-xs text-zinc-400 tabular-nums">
+            <div className="text-xs tabular-nums text-zinc-400">
               {priceAtTime.time}
             </div>
           </div>
@@ -131,7 +131,7 @@ export function Stock({ name = 'DOGE', price = 12.34, delta = 1 }) {
 
         {startHighlight ? (
           <div
-            className="absolute w-5 h-32 border rounded-md pointer-events-none select-none bg-zinc-500/20 border-zinc-500"
+            className="pointer-events-none absolute h-32 w-5 select-none rounded-md border border-zinc-500 bg-zinc-500/20"
             style={{
               left: startHighlight,
               width: endHighlight
