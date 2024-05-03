@@ -95,7 +95,13 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
   };
 }
 
-async function submitUserMessage(content: string) {
+async function submitUserMessage(
+  content: string,
+  temperature: number = 0,
+  top_p: number = 1,
+  frequency_penalty: number = 1,
+  presence_penalty: number = 1
+) {
   'use server';
 
   const aiState = getMutableAIState<typeof AI>();
@@ -202,7 +208,10 @@ Besides that, you can also chat with users and do some calculations if needed.`,
         }),
       },
     ],
-    temperature: 0,
+    temperature, // you want absolute certainty for spell check
+    top_p,
+    frequency_penalty,
+    presence_penalty,
   });
 
   completion.onTextContent((content: string, isFinal: boolean) => {

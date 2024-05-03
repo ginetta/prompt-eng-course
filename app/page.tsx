@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { useUIState, useActions } from 'ai/rsc';
 import Textarea from 'react-textarea-autosize';
+import { Label } from '@radix-ui/react-label';
 
 import { type AI } from './action';
 
 import { UserMessage } from '@/components/llm-stocks/message';
 import { ChatScrollAnchor } from '@/lib/hooks/chat-scroll-anchor';
-import { FooterText } from '@/components/footer';
+// import { FooterText } from '@/components/footer';
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit';
 import {
   Tooltip,
@@ -19,7 +20,7 @@ import { IconArrowElbow, IconPlus } from '@/components/ui/icons';
 import { Button } from '@/components/ui/button';
 import { ChatList } from '@/components/chat-list';
 import { EmptyScreen } from '@/components/empty-screen';
-import { Sidebar } from '@/components/sidebar';
+import { SliderWithLabel } from '@/components/ui/sliderWithLabel';
 
 export default function Page() {
   const [messages, setMessages] = useUIState<typeof AI>();
@@ -54,32 +55,33 @@ export default function Page() {
 
   return (
     <>
-      <Sidebar className="sticky top-14 flex h-[calc(100vh-56px)] shrink-0 flex-col overflow-auto bg-background p-8" />
+      <aside className="sticky top-14 flex h-[calc(100vh-56px)] shrink-0 flex-col space-y-10 overflow-auto bg-background p-8">
+        <form
+          className="flex flex-col space-y-4"
+          onSubmit={async (e: any) => {
+            e.preventDefault();
+          }}
+        >
+          <Label className="text-lg font-normal text-gray-400">
+            System Message
+          </Label>
+          <Textarea placeholder="Type your message here." minRows={6} />
+          <Button type="submit">Send</Button>
+        </form>
+        <div className="flex flex-col space-y-8 border-t pt-12 ">
+          <SliderWithLabel label="Temperature" max={100} step={1} />
+          <SliderWithLabel label="Top P" max={100} step={1} />
+          <SliderWithLabel label="Frequency penalty" max={100} step={1} />
+          <SliderWithLabel label="Presence penalty" max={100} step={1} />
+        </div>
+      </aside>
       <section className="mx-auto flex w-full max-w-screen-lg flex-col content-between pt-4 md:pt-10">
         {messages.length ? (
           <>
             <ChatList messages={messages} />
           </>
         ) : (
-          <EmptyScreen
-            submitMessage={async (message) => {
-              // Add user message UI
-              setMessages((currentMessages) => [
-                ...currentMessages,
-                {
-                  id: Date.now(),
-                  display: <UserMessage>{message}</UserMessage>,
-                },
-              ]);
-
-              // Submit and get response message
-              const responseMessage = await submitUserMessage(message);
-              setMessages((currentMessages) => [
-                ...currentMessages,
-                responseMessage,
-              ]);
-            }}
-          />
+          <EmptyScreen />
         )}
         <ChatScrollAnchor trackVisibility={true} />
         <div className="sticky bottom-0 w-full from-muted/30 from-0% to-muted/30 to-50% duration-300 ease-in-out animate-in peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px] dark:from-background/10 dark:from-10% dark:to-background/80">
