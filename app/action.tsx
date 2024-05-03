@@ -97,10 +97,10 @@ async function confirmPurchase(symbol: string, price: number, amount: number) {
 
 async function submitUserMessage(
   content: string,
-  temperature: number = 0,
+  temperature: number = 1,
   top_p: number = 1,
-  frequency_penalty: number = 1,
-  presence_penalty: number = 1
+  frequency_penalty: number = 0,
+  presence_penalty: number = 0
 ) {
   'use server';
 
@@ -208,7 +208,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
         }),
       },
     ],
-    temperature, // you want absolute certainty for spell check
+    temperature,
     top_p,
     frequency_penalty,
     presence_penalty,

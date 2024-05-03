@@ -53,6 +53,12 @@ export default function Page() {
     };
   }, [inputRef]);
 
+  // Default values of the OpenAI API parameters
+  const [temperature, setTemperature] = useState(1);
+  const [topP, setTopP] = useState(1);
+  const [frequencyPenalty, setFrequencyPenalty] = useState(0);
+  const [presencePenalty, setPresencePenalty] = useState(0);
+
   return (
     <>
       <aside className="sticky top-14 flex h-[calc(100vh-56px)] shrink-0 flex-col space-y-10 overflow-auto bg-background p-8">
@@ -65,14 +71,58 @@ export default function Page() {
           <Label className="text-lg font-normal text-gray-400">
             System Message
           </Label>
-          <Textarea placeholder="Type your message here." minRows={6} />
+          <Textarea
+            placeholder="Type your message here."
+            minRows={6}
+            className="min-h-36"
+          />
           <Button type="submit">Send</Button>
         </form>
         <div className="flex flex-col space-y-8 border-t pt-12 ">
-          <SliderWithLabel label="Temperature" max={100} step={1} />
-          <SliderWithLabel label="Top P" max={100} step={1} />
-          <SliderWithLabel label="Frequency penalty" max={100} step={1} />
-          <SliderWithLabel label="Presence penalty" max={100} step={1} />
+          <SliderWithLabel
+            label="Temperature"
+            min={0}
+            max={2}
+            step={0.01}
+            value={[temperature]}
+            defaultValue={[temperature]}
+            onValueChange={(e) => {
+              setTemperature(e[0]);
+            }}
+          />
+          <SliderWithLabel
+            label="Top P"
+            min={0}
+            max={1}
+            step={0.01}
+            value={[topP]}
+            defaultValue={[topP]}
+            onValueChange={(e) => {
+              setTopP(e[0]);
+            }}
+          />
+          <SliderWithLabel
+            label="Frequency penalty"
+            min={0}
+            max={2}
+            step={0.01}
+            value={[frequencyPenalty]}
+            defaultValue={[frequencyPenalty]}
+            onValueChange={(e) => {
+              setFrequencyPenalty(e[0]);
+            }}
+          />
+          <SliderWithLabel
+            label="Presence penalty"
+            min={0}
+            max={2}
+            step={0.01}
+            value={[presencePenalty]}
+            defaultValue={[presencePenalty]}
+            onValueChange={(e) => {
+              setPresencePenalty(e[0]);
+            }}
+          />
         </div>
       </aside>
       <section className="mx-auto flex w-full max-w-screen-lg flex-col content-between pt-4 md:pt-10">
@@ -112,7 +162,13 @@ export default function Page() {
 
                   try {
                     // Submit and get response message
-                    const responseMessage = await submitUserMessage(value);
+                    const responseMessage = await submitUserMessage(
+                      value,
+                      temperature,
+                      topP,
+                      frequencyPenalty,
+                      presencePenalty
+                    );
                     setMessages((currentMessages) => [
                       ...currentMessages,
                       responseMessage,
