@@ -64,9 +64,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex h-screen flex-col justify-between">
+            <div className="flex min-h-screen flex-col justify-between">
               <Header />
-              <main className="flex w-full flex-1 space-x-8">{children}</main>
+              <main className="flex h-dvh flex-1 bg-muted/50">{children}</main>
             </div>
           </Providers>
         </AI>

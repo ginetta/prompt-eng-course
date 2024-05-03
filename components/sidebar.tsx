@@ -2,6 +2,7 @@ import { ComponentProps, FC } from 'react';
 
 import { Button } from './ui/button';
 import { SliderWithLabel } from './ui/sliderWithLabel';
+import { Label } from './ui/label';
 
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
@@ -17,6 +18,9 @@ export const Sidebar: FC<ComponentProps<'aside'>> = ({ className }) => {
       </div>
 
       <form className="flex flex-col space-y-4">
+        <Label className="text-lg font-normal text-gray-400">
+          System Message
+        </Label>
         <Textarea placeholder="Type your message here." />
         <Button type="submit">Send</Button>
       </form>
