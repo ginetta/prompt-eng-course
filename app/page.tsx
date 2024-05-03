@@ -1,13 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { useUIState, useActions } from 'ai/rsc';
+import { FormEvent, useEffect, useRef, useState } from 'react';
+import { useUIState, useActions, useAIState } from 'ai/rsc';
 import Textarea from 'react-textarea-autosize';
-import { Label } from '@radix-ui/react-label';
 
 import { type AI } from './action';
 
-import { UserMessage } from '@/components/llm-stocks/message';
+import { BotMessage, UserMessage } from '@/components/llm-stocks/message';
 import { ChatScrollAnchor } from '@/lib/hooks/chat-scroll-anchor';
 // import { FooterText } from '@/components/footer';
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit';
@@ -21,9 +20,10 @@ import { Button } from '@/components/ui/button';
 import { ChatList } from '@/components/chat-list';
 import { EmptyScreen } from '@/components/empty-screen';
 import { SliderWithLabel } from '@/components/ui/sliderWithLabel';
+import { PromptTextarea } from '@/components/prompt-textarea';
 
 export default function Page() {
-  const [messages, setMessages] = useUIState<typeof AI>();
+  const [historyChatMessages, setHistoryChatMessages] = useUIState<typeof AI>();
   const { submitUserMessage } = useActions<typeof AI>();
   const [inputValue, setInputValue] = useState('');
   const { formRef, onKeyDown } = useEnterSubmit();
@@ -59,25 +59,48 @@ export default function Page() {
   const [frequencyPenalty, setFrequencyPenalty] = useState(0);
   const [presencePenalty, setPresencePenalty] = useState(0);
 
+  const onSubmitRole = async (e: FormEvent, newPrompt: string) => {
+    e.preventDefault();
+
+    const value = newPrompt.trim();
+
+    if (!value) return;
+    setHistoryChatMessages((currentMessages) => [
+      ...currentMessages,
+      {
+        id: Date.now(),
+        display: (
+          <BotMessage>
+            The new assistant prompt engineering is: {value}
+          </BotMessage>
+        ),
+      },
+    ]);
+    try {
+      // Submit and get response message
+      const responseMessage = await submitUserMessage(
+        value,
+        temperature,
+        topP,
+        frequencyPenalty,
+        presencePenalty,
+        newPrompt
+      );
+
+      setHistoryChatMessages((currentMessages) => [
+        ...currentMessages,
+        responseMessage,
+      ]);
+    } catch (error) {
+      // You may want to show a toast or trigger an error state.
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <aside className="sticky top-14 flex h-[calc(100vh-56px)] shrink-0 flex-col space-y-10 overflow-auto bg-background p-8">
-        <form
-          className="flex flex-col space-y-4"
-          onSubmit={async (e: any) => {
-            e.preventDefault();
-          }}
-        >
-          <Label className="text-lg font-normal text-gray-400">
-            System Message
-          </Label>
-          <Textarea
-            placeholder="Type your message here."
-            minRows={6}
-            className="min-h-36"
-          />
-          <Button type="submit">Send</Button>
-        </form>
+        <PromptTextarea onSubmit={onSubmitRole} />
         <div className="flex flex-col space-y-8 border-t pt-12 ">
           <SliderWithLabel
             label="Temperature"
@@ -126,9 +149,9 @@ export default function Page() {
         </div>
       </aside>
       <section className="mx-auto flex w-full max-w-screen-lg flex-col content-between pt-4 md:pt-10">
-        {messages.length ? (
+        {historyChatMessages.length ? (
           <>
-            <ChatList messages={messages} />
+            <ChatList messages={historyChatMessages} />
           </>
         ) : (
           <EmptyScreen />
@@ -152,7 +175,7 @@ export default function Page() {
                   if (!value) return;
 
                   // Add user message UI
-                  setMessages((currentMessages) => [
+                  setHistoryChatMessages((currentMessages) => [
                     ...currentMessages,
                     {
                       id: Date.now(),
@@ -169,7 +192,8 @@ export default function Page() {
                       frequencyPenalty,
                       presencePenalty
                     );
-                    setMessages((currentMessages) => [
+
+                    setHistoryChatMessages((currentMessages) => [
                       ...currentMessages,
                       responseMessage,
                     ]);
