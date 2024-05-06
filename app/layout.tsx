@@ -1,15 +1,18 @@
 import type { Metadata } from 'next';
-import { GeistMono } from 'geist/font/mono';
-import { GeistSans } from 'geist/font/sans';
 import { Analytics } from '@vercel/analytics/react';
+import { Montserrat } from 'next/font/google';
 
 import './globals.css';
-
 import { AI } from './action';
 
 import { Toaster } from '@/components/ui/toaster';
 import { Header } from '@/components/header';
 import { Providers } from '@/components/providers';
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  variable: '--font-montserrat',
+});
 
 const meta = {
   title: 'AI RSC Demo',
@@ -30,7 +33,7 @@ export const metadata: Metadata = {
   twitter: {
     ...meta,
     card: 'summary_large_image',
-    site: '@vercel',
+    site: '@ginetta',
   },
   openGraph: {
     ...meta,
@@ -53,9 +56,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`font-sans antialiased ${GeistSans.variable} ${GeistMono.variable}`}
-      >
+      <body className={`font-sans antialiased ${montserrat.variable} `}>
         <Toaster />
         <AI>
           <Providers

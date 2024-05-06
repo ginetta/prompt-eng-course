@@ -12,7 +12,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-geist-sans)', ...fontFamily.sans],
+        sans: ['var(--font-montserrat)', ...fontFamily.sans],
         mono: ['var(--font-geist-mono)', ...fontFamily.mono],
       },
       backgroundImage: {
