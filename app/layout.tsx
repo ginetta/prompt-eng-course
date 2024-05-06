@@ -15,15 +15,14 @@ const montserrat = Montserrat({
 });
 
 const meta = {
-  title: 'AI RSC Demo',
-  description:
-    'Demo of an interactive financial assistant built using Next.js and Vercel AI SDK.',
+  title: 'Prompt Engineering Course',
+  description: 'Prompt Engineering Course ',
 };
 export const metadata: Metadata = {
   ...meta,
   title: {
-    default: 'AI RSC Demo',
-    template: `%s - AI RSC Demo`,
+    default: 'Prompt Engineering Course',
+    template: `%s - Prompt Engineering Course`,
   },
   icons: {
     icon: '/favicon.ico',
