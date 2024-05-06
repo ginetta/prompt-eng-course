@@ -21,6 +21,7 @@ import { ChatList } from '@/components/chat-list';
 import { EmptyScreen } from '@/components/empty-screen';
 import { SliderWithLabel } from '@/components/ui/sliderWithLabel';
 import { PromptTextarea } from '@/components/prompt-textarea';
+import { cn } from '@/lib/utils';
 
 export default function Page() {
   const [historyChatMessages, setHistoryChatMessages] = useUIState<typeof AI>();
@@ -70,7 +71,13 @@ export default function Page() {
       {
         id: Date.now(),
         display: (
-          <BotMessage>
+          <BotMessage
+            className={cn(
+              currentMessages.length > 0
+                ? 'mt-8 border-t border-t-foreground pt-12'
+                : ''
+            )}
+          >
             The new assistant prompt engineering is: {value}
           </BotMessage>
         ),

@@ -19,29 +19,13 @@ const consumeStream = async (stream: ReadableStream) => {
 };
 
 export function runOpenAICompletion<
-  T extends Omit<
-    Parameters<typeof OpenAI.prototype.chat.completions.create>[0],
-    'functions'
-  >,
-  const TFunctions extends TAnyToolDefinitionArray,
->(
-  openai: OpenAI,
-  params: T & {
-    functions: TFunctions;
-  }
-) {
+  T extends Parameters<typeof OpenAI.prototype.chat.completions.create>[0],
+>(openai: OpenAI, params: T) {
   let text = '';
   let hasFunction = false;
 
   type TToolMap = TToolDefinitionMap<TFunctions>;
   let onTextContent: (text: string, isFinal: boolean) => void = () => {};
-
-  const functionsMap: Record<string, TFunctions[number]> = {};
-  for (const fn of params.functions) {
-    functionsMap[fn.name] = fn;
-  }
-
-  let onFunctionCall = {} as any;
 
   const { functions, ...rest } = params;
 
@@ -51,38 +35,8 @@ export function runOpenAICompletion<
         (await openai.chat.completions.create({
           ...rest,
           stream: true,
-          functions: functions.map((fn) => ({
-            name: fn.name,
-            description: fn.description,
-            parameters: zodToJsonSchema(fn.parameters) as Record<
-              string,
-              unknown
-            >,
-          })),
         })) as any,
         {
-          async experimental_onFunctionCall(functionCallPayload) {
-            hasFunction = true;
-
-            if (!onFunctionCall[functionCallPayload.name]) {
-              return;
-            }
-
-            // we need to convert arguments from z.input to z.output
-            // this is necessary if someone uses a .default in their schema
-            const zodSchema = functionsMap[functionCallPayload.name].parameters;
-            const parsedArgs = zodSchema.safeParse(
-              functionCallPayload.arguments
-            );
-
-            if (!parsedArgs.success) {
-              throw new Error(
-                `Invalid function call in message. Expected a function call object`
-              );
-            }
-
-            onFunctionCall[functionCallPayload.name]?.(parsedArgs.data);
-          },
           onToken(token) {
             text += token;
             if (text.startsWith('{')) return;
@@ -102,22 +56,6 @@ export function runOpenAICompletion<
       callback: (text: string, isFinal: boolean) => void | Promise<void>
     ) => {
       onTextContent = callback;
-    },
-    onFunctionCall: <TName extends TFunctions[number]['name']>(
-      name: TName,
-      callback: (
-        args: z.output<
-          TName extends keyof TToolMap
-            ? TToolMap[TName] extends infer TToolDef
-              ? TToolDef extends TAnyToolDefinitionArray[number]
-                ? TToolDef['parameters']
-                : never
-              : never
-            : never
-        >
-      ) => void | Promise<void>
-    ) => {
-      onFunctionCall[name] = callback;
     },
   };
 }
