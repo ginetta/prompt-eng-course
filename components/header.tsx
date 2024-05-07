@@ -10,7 +10,7 @@ export async function Header() {
           <IconGinetta className="h-12 w-12" />
         </Link>
         <h1 className="text-strong my-auto flex text-lg font-bold">
-          Prompt Engineering Course
+          Prompt Engineering Practice
         </h1>
       </span>
     </header>

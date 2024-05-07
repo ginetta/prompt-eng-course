@@ -12,7 +12,7 @@ export const SliderWithLabel: FC<SliderWithLabelProps> = ({
   ...props
 }) => {
   return (
-    <div className="flex h-full w-[300px] flex-col items-start justify-center space-y-4 bg-muted/50 dark:bg-background">
+    <div className="flex h-full w-[300px] flex-col items-start justify-center space-y-4">
       <div className="flex w-full justify-between">
         <h3 className="text-lg text-gray-400">{label}</h3>
         <h4>{props.value}</h4>

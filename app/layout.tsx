@@ -15,14 +15,14 @@ const montserrat = Montserrat({
 });
 
 const meta = {
-  title: 'Prompt Engineering Course',
-  description: 'Prompt Engineering Course ',
+  title: 'Prompt Engineering Practice',
+  description: 'Prompt Engineering Practice ',
 };
 export const metadata: Metadata = {
   ...meta,
   title: {
-    default: 'Prompt Engineering Course',
-    template: `%s - Prompt Engineering Course`,
+    default: 'Prompt Engineering Practice',
+    template: `%s - Prompt Engineering Practice`,
   },
   icons: {
     icon: '/favicon.ico',

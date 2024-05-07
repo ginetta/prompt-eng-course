@@ -6,7 +6,11 @@ import Textarea from 'react-textarea-autosize';
 
 import { type AI } from './action';
 
-import { BotMessage, UserMessage } from '@/components/llm-stocks/message';
+import {
+  BotMessage,
+  FeedbackMessage,
+  UserMessage,
+} from '@/components/llm-stocks/message';
 import { ChatScrollAnchor } from '@/lib/hooks/chat-scroll-anchor';
 // import { FooterText } from '@/components/footer';
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit';
@@ -46,11 +50,16 @@ export default function Page() {
         }
       }
     };
-
     document.addEventListener('keydown', handleKeyDown);
+
+    const handleRefresh = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+    };
+    window.addEventListener('beforeunload', handleRefresh);
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('beforeunload', handleRefresh);
     };
   }, [inputRef]);
 
@@ -71,15 +80,15 @@ export default function Page() {
       {
         id: Date.now(),
         display: (
-          <BotMessage
+          <FeedbackMessage
             className={cn(
               currentMessages.length > 0
-                ? 'mt-8 border-t border-t-foreground pt-12'
-                : ''
+                ? 'mt-8 border-t border-t-foreground pt-12 text-green-700 dark:text-green-600'
+                : 'text-green-700 dark:text-green-600'
             )}
           >
-            The new assistant prompt engineering is: {value}
-          </BotMessage>
+            System message updated
+          </FeedbackMessage>
         ),
       },
     ]);
@@ -210,24 +219,7 @@ export default function Page() {
                   }
                 }}
               >
-                <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background px-8 sm:rounded-md sm:border sm:px-12">
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="absolute left-0 top-4 h-8 w-8 rounded-full bg-background p-0 sm:left-4"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          window.location.reload();
-                        }}
-                      >
-                        <IconPlus />
-                        <span className="sr-only">New Chat</span>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>New Chat</TooltipContent>
-                  </Tooltip>
+                <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background pr-8 sm:rounded-md sm:border sm:pr-12">
                   <Textarea
                     ref={inputRef}
                     tabIndex={0}
