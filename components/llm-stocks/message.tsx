@@ -1,6 +1,6 @@
 'use client';
 
-import { IconAI, IconUser } from '@/components/ui/icons';
+import { IconAI, IconSystem, IconUser } from '@/components/ui/icons';
 import { cn } from '@/lib/utils';
 
 // Different types of message bubbles.
@@ -11,7 +11,26 @@ export function UserMessage({ children }: { children: React.ReactNode }) {
       <div className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border bg-background shadow-sm">
         <IconUser />
       </div>
-      <div className="ml-4 flex-1 space-y-2 overflow-hidden whitespace-pre-line px-1">
+      <div className="ml-4 flex-1 space-y-2 overflow-hidden whitespace-pre-line px-1 pt-1">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+export function FeedbackMessage({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn('group relative flex items-start', className)}>
+      <div className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border bg-background text-primary shadow-sm">
+        <IconSystem />
+      </div>
+      <div className="ml-4 flex-1 space-y-2 overflow-hidden whitespace-pre-line px-1 pt-1">
         {children}
       </div>
     </div>
@@ -30,7 +49,7 @@ export function BotMessage({
       <div className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm">
         <IconAI />
       </div>
-      <div className="ml-4 flex-1 space-y-2 overflow-hidden whitespace-pre-line px-1">
+      <div className="ml-4 flex-1 space-y-2 overflow-hidden whitespace-pre-line px-1 pt-1">
         {children}
       </div>
     </div>
