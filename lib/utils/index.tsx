@@ -24,7 +24,6 @@ export function runOpenAICompletion<
   let text = '';
   let hasFunction = false;
 
-  type TToolMap = TToolDefinitionMap<TFunctions>;
   let onTextContent: (text: string, isFinal: boolean) => void = () => {};
 
   const { functions, ...rest } = params;
