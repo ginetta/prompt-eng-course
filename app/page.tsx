@@ -115,11 +115,12 @@ export default function Page() {
 
   return (
     <>
-      <aside className="sticky top-14 flex h-[calc(100vh-56px)] shrink-0 flex-col space-y-10 overflow-auto bg-background p-8">
+      <aside className="sticky top-14 z-10 flex h-[calc(100vh-56px)] shrink-0 flex-col gap-10 overflow-auto bg-background p-8">
         <PromptTextarea onSubmit={onSubmitRole} />
-        <div className="flex flex-col space-y-8 border-t pt-12 ">
+        <div className="flex flex-col gap-10 border-t pt-12 ">
           <SliderWithLabel
             label="Temperature"
+            tooltip="Lower temperatures yield more predictable outputs, higher temperatures foster creativity by giving less probable tokens a chance."
             min={0}
             max={2}
             step={0.01}
@@ -129,8 +130,10 @@ export default function Page() {
               setTemperature(e[0]);
             }}
           />
+
           <SliderWithLabel
             label="Top P"
+            tooltip="Utilizes another technique to control output determinism; lower values for precise answers, higher values for creative diversity (adjust either temperature or Top P, not both, to fine-tune response characteristics)"
             min={0}
             max={1}
             step={0.01}
@@ -140,8 +143,10 @@ export default function Page() {
               setTopP(e[0]);
             }}
           />
+
           <SliderWithLabel
             label="Frequency penalty"
+            tooltip="Reduces word repetition by increasing penalties on tokens as they recur within the text."
             min={0}
             max={2}
             step={0.01}
@@ -151,8 +156,10 @@ export default function Page() {
               setFrequencyPenalty(e[0]);
             }}
           />
+
           <SliderWithLabel
             label="Presence penalty"
+            tooltip="Applies a uniform penalty to repeated tokens, discouraging phrase repetition and enhancing text diversity."
             min={0}
             max={2}
             step={0.01}
