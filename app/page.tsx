@@ -115,53 +115,97 @@ export default function Page() {
 
   return (
     <>
-      <aside className="sticky top-14 flex h-[calc(100vh-56px)] shrink-0 flex-col space-y-10 overflow-auto bg-background p-8">
+      <aside className="sticky top-14 z-10 flex h-[calc(100vh-56px)] shrink-0 flex-col gap-10 overflow-auto bg-background p-8">
         <PromptTextarea onSubmit={onSubmitRole} />
-        <div className="flex flex-col space-y-8 border-t pt-12 ">
-          <SliderWithLabel
-            label="Temperature"
-            min={0}
-            max={2}
-            step={0.01}
-            value={[temperature]}
-            defaultValue={[temperature]}
-            onValueChange={(e) => {
-              setTemperature(e[0]);
-            }}
-          />
-          <SliderWithLabel
-            label="Top P"
-            min={0}
-            max={1}
-            step={0.01}
-            value={[topP]}
-            defaultValue={[topP]}
-            onValueChange={(e) => {
-              setTopP(e[0]);
-            }}
-          />
-          <SliderWithLabel
-            label="Frequency penalty"
-            min={0}
-            max={2}
-            step={0.01}
-            value={[frequencyPenalty]}
-            defaultValue={[frequencyPenalty]}
-            onValueChange={(e) => {
-              setFrequencyPenalty(e[0]);
-            }}
-          />
-          <SliderWithLabel
-            label="Presence penalty"
-            min={0}
-            max={2}
-            step={0.01}
-            value={[presencePenalty]}
-            defaultValue={[presencePenalty]}
-            onValueChange={(e) => {
-              setPresencePenalty(e[0]);
-            }}
-          />
+        <div className="flex flex-col gap-10 border-t pt-12 ">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div>
+                <SliderWithLabel
+                  label="Temperature"
+                  min={0}
+                  max={2}
+                  step={0.01}
+                  value={[temperature]}
+                  defaultValue={[temperature]}
+                  onValueChange={(e) => {
+                    setTemperature(e[0]);
+                  }}
+                />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent className="max-w-xs" side="right" sideOffset={20}>
+              Lower temperatures yield more predictable outputs, higher
+              temperatures foster creativity by giving less probable tokens a
+              chance.
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div>
+                <SliderWithLabel
+                  label="Top P"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={[topP]}
+                  defaultValue={[topP]}
+                  onValueChange={(e) => {
+                    setTopP(e[0]);
+                  }}
+                />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent className="max-w-xs" side="right" sideOffset={20}>
+              Utilizes another technique to control output determinism; lower
+              values for precise answers, higher values for creative diversity
+              (adjust either temperature or Top P, not both, to fine-tune
+              response characteristics)
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div>
+                <SliderWithLabel
+                  label="Frequency penalty"
+                  min={0}
+                  max={2}
+                  step={0.01}
+                  value={[frequencyPenalty]}
+                  defaultValue={[frequencyPenalty]}
+                  onValueChange={(e) => {
+                    setFrequencyPenalty(e[0]);
+                  }}
+                />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent className="max-w-xs" side="right" sideOffset={20}>
+              Reduces word repetition by increasing penalties on tokens as they
+              recur within the text.
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div>
+                <SliderWithLabel
+                  label="Presence penalty"
+                  min={0}
+                  max={2}
+                  step={0.01}
+                  value={[presencePenalty]}
+                  defaultValue={[presencePenalty]}
+                  onValueChange={(e) => {
+                    setPresencePenalty(e[0]);
+                  }}
+                />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent className="max-w-xs" side="right" sideOffset={20}>
+              Applies a uniform penalty to repeated tokens, discouraging phrase
+              repetition and enhancing text diversity.
+            </TooltipContent>
+          </Tooltip>
         </div>
       </aside>
       <section className="mx-auto flex w-full max-w-screen-lg flex-col content-between pt-4 md:pt-10">
