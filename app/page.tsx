@@ -7,12 +7,10 @@ import Textarea from 'react-textarea-autosize';
 import { type AI } from './action';
 
 import {
-  BotMessage,
   FeedbackMessage,
   UserMessage,
-} from '@/components/llm-stocks/message';
+} from '@/components/chat-message/message';
 import { ChatScrollAnchor } from '@/lib/hooks/chat-scroll-anchor';
-// import { FooterText } from '@/components/footer';
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit';
 import {
   Tooltip,
@@ -259,7 +257,6 @@ export default function Page() {
                   </div>
                 </div>
               </form>
-              {/* <FooterText className="hidden sm:block" /> */}
             </div>
           </div>
         </div>
