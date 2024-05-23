@@ -1,5 +1,9 @@
 'use client';
 
+import Markdown from 'react-markdown';
+
+import { spinner } from './spinner';
+
 import { IconAI, IconSystem, IconUser } from '@/components/ui/icons';
 import { cn } from '@/lib/utils';
 
@@ -11,7 +15,7 @@ export function UserMessage({ children }: { children: React.ReactNode }) {
       <div className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border bg-background shadow-sm">
         <IconUser />
       </div>
-      <div className="ml-4 flex-1 space-y-2 overflow-hidden whitespace-pre-line px-1 pt-1">
+      <div className="ml-4 flex-1 overflow-hidden whitespace-pre-line px-1 pt-1">
         {children}
       </div>
     </div>
@@ -30,7 +34,7 @@ export function FeedbackMessage({
       <div className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border bg-background text-primary shadow-sm">
         <IconSystem />
       </div>
-      <div className="ml-4 flex-1 space-y-2 overflow-hidden whitespace-pre-line px-1 pt-1">
+      <div className="ml-4 flex-1 overflow-hidden whitespace-pre-line px-1 pt-1">
         {children}
       </div>
     </div>
@@ -40,17 +44,19 @@ export function FeedbackMessage({
 export function BotMessage({
   children,
   className,
+  loading,
 }: {
-  children: React.ReactNode;
+  children?: string;
   className?: string;
+  loading?: boolean;
 }) {
   return (
     <div className={cn('group relative flex items-start', className)}>
       <div className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm">
         <IconAI />
       </div>
-      <div className="ml-4 flex-1 space-y-2 overflow-hidden whitespace-pre-line px-1 pt-1">
-        {children}
+      <div className="ml-4 flex-1 overflow-hidden whitespace-pre-line px-1 pt-1 leading-tight dark:prose-invert prose-p:m-0 prose-ol:m-0 prose-ul:m-0 prose-li:m-0">
+        {loading ? spinner : <Markdown>{children}</Markdown>}
       </div>
     </div>
   );
