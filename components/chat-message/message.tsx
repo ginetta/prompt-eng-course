@@ -55,7 +55,8 @@ export function BotMessage({
       <div className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow-sm">
         <IconAI />
       </div>
-      <div className="ml-4 flex-1 overflow-hidden whitespace-pre-line px-1 pt-1 leading-tight dark:prose-invert prose-p:m-0 prose-ol:m-0 prose-ul:m-0 prose-li:m-0">
+      {/* prettier-ignore */}
+      <div className="prose prose-ul:m-0 prose-ol:m-0 prose-li:m-0 prose-p:m-0 dark:prose-invert ml-4 flex-1 overflow-hidden whitespace-pre-line px-1 pt-1 leading-tight">
         {loading ? spinner : <Markdown>{children}</Markdown>}
       </div>
     </div>
